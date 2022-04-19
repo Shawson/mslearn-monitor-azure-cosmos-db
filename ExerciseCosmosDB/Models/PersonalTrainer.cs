@@ -38,6 +38,9 @@ namespace mslearn_monitor_azure_cosmos_db.Models
         public string FullName { get; set; }
         public string Locale { get; set; }
         public string Brand { get; set; }
+        public string PartitionKey { get; set; }
+        public int GymId { get; set; }
+        public string PartitionKeyWithGym { get; set; }
         public string Bio { get; set; }
         public string ProfileImageUrl { get; set; }
         public List<SpecialistArea> SpecialistAreas { get; set; }
@@ -77,6 +80,11 @@ namespace mslearn_monitor_azure_cosmos_db.Models
                 document.ProfileImageUrl = faker.Internet.Url();
                 document.Locale = locales[faker.Random.Int(0, 1)];
                 document.Brand = brands[faker.Random.Int(0, 2)];
+                
+                document.PartitionKey = $"{document.Brand}-{document.Locale}";
+
+                document.GymId = faker.Random.Int(1, 3);
+                document.PartitionKeyWithGym = $"{document.Brand}-{document.Locale}";
 
                 document.Identifiers = new Identifiers
                 {
