@@ -236,12 +236,6 @@
                 dataCollection = await this.CreatePartitionedCollectionAsync(Options.Database, Options.Collection, Options.Throughput, Options.PartitionKey);
             }
 
-            long currentCollectionThroughput = 0;
-            currentCollectionThroughput = Options.Throughput;
-
-            OfferV2 offer = (OfferV2) client.CreateOfferQuery ().Where (o => o.ResourceLink == dataCollection.SelfLink).AsEnumerable ().FirstOrDefault ();
-            currentCollectionThroughput = offer.Content.OfferThroughput;
-
             Uri collectionUri = UriFactory.CreateDocumentCollectionUri (Options.Database, Options.Collection);
 
             if (Options.Verbose)
@@ -250,7 +244,7 @@
                 Console.WriteLine("Summary:");
                 Console.WriteLine("--------------------------------------------------------------------- ");
                 Console.WriteLine("Endpoint: {0}", client.ServiceEndpoint);
-                Console.WriteLine("Collection : {0}.{1} at {2} RU/s with partition key {3}", Options.Database, Options.Collection, currentCollectionThroughput, Options.PartitionKey);
+                Console.WriteLine("Collection : {0}.{1} with partition key {2}", Options.Database, Options.Collection, Options.PartitionKey);
                 Console.WriteLine("Operations : {0} {1}", Options.NumberOfOperations, Options.Operation);
                 Console.WriteLine("Degree of parallelism*: {0}", Options.Parallelism);
                 Console.WriteLine("--------------------------------------------------------------------- ");
