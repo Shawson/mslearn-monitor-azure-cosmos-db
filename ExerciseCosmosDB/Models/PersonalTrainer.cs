@@ -38,9 +38,8 @@ namespace mslearn_monitor_azure_cosmos_db.Models
         public string FullName { get; set; }
         public string Locale { get; set; }
         public string Brand { get; set; }
-        public string PartitionKey { get; set; }
+        public virtual string PartitionId { get; set; }
         public int GymId { get; set; }
-        public string PartitionKeyWithGym { get; set; }
         public string Bio { get; set; }
         public string ProfileImageUrl { get; set; }
         public List<SpecialistArea> SpecialistAreas { get; set; }
@@ -60,11 +59,11 @@ namespace mslearn_monitor_azure_cosmos_db.Models
             PersonalTrainers = new PersonalTrainer[num];
             for (int i = 0; i < num; i++)
             {
-                PersonalTrainers[i] = PersonalTrainer.Create();
+                PersonalTrainers[i] = PersonalTrainer.Create(false);
             }
         }
 
-        public static PersonalTrainer Create()
+        public static PersonalTrainer Create(bool useGymInPartition)
         {
             Bogus.Faker<PersonalTrainer> fakeGenerator = new Bogus.Faker<PersonalTrainer>().Rules(
             (faker, document) =>
@@ -81,10 +80,12 @@ namespace mslearn_monitor_azure_cosmos_db.Models
                 document.Locale = locales[faker.Random.Int(0, 1)];
                 document.Brand = brands[faker.Random.Int(0, 2)];
                 
-                document.PartitionKey = $"{document.Brand}-{document.Locale}";
+                document.PartitionId = $"{document.Brand}-{document.Locale}";
+
+                if (useGymInPartition)
+                    document.PartitionId += $"-{document.GymId}";
 
                 document.GymId = faker.Random.Int(1, 3);
-                document.PartitionKeyWithGym = $"{document.Brand}-{document.Locale}";
 
                 document.Identifiers = new Identifiers
                 {

@@ -12,6 +12,8 @@ namespace MsLearnCosmosDB
 {
     class InsertTrainer : Operation
     {
+        protected bool UseGymInPartition = false;
+
         public string GetOperationType()
         {
             return "Write";
@@ -24,7 +26,7 @@ namespace MsLearnCosmosDB
             {
                 cancellationTokenService.CancelAfter(2500);
 
-                PersonalTrainer document = PersonalTrainer.Create();
+                PersonalTrainer document = PersonalTrainer.Create(UseGymInPartition);
 
                 ResourceResponse<Document> response = await client.CreateDocumentAsync(documentCollectionUri, document, new RequestOptions() { }, false, cancellationTokenService.Token);
 
@@ -48,6 +50,14 @@ namespace MsLearnCosmosDB
                 }
             }
 
+        }
+    }
+
+    class InsertTrainerByGym : InsertTrainer
+    {
+        public InsertTrainerByGym()
+        {
+            UseGymInPartition = true;
         }
     }
 }
