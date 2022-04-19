@@ -1,0 +1,14 @@
+{
+    "indexingMode": "consistent",
+    "automatic": true,
+    "includedPaths": [
+      {
+        "path": "/AssociatedGyms/?"
+      }
+    ],
+    "excludedPaths": [
+        {
+            "path": "/"
+        }
+    ]
+}
