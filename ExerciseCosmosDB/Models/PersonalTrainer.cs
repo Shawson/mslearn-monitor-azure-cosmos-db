@@ -82,10 +82,10 @@ namespace mslearn_monitor_azure_cosmos_db.Models
                 
                 document.PartitionId = $"{document.Brand}-{document.Locale}";
 
+                document.GymId = faker.Random.Int(1, 3);
+
                 if (useGymInPartition)
                     document.PartitionId += $"-{document.GymId}";
-
-                document.GymId = faker.Random.Int(1, 3);
 
                 document.Identifiers = new Identifiers
                 {
