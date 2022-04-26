@@ -16,7 +16,7 @@ namespace MsLearnCosmosDB
 
         public string GetOperationType()
         {
-            return "Write";
+            return "Read";
         }
 
         public async Task Execute(Experiment experiment, DocumentClient client, DocumentCollection collection, Uri documentCollectionUri, int taskId, ConfigurationOptions options)
